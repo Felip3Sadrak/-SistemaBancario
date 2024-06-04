@@ -1,14 +1,14 @@
-menu= """
+menu = '''
 
 [d] Depositar
 [s] Sacar
 [e] Extrato
 [q] Sair
 
-=> """
+=> '''
 
 saldo =0
-limite = 0
+limite = 500
 extrato = ""
 numero_saques = 0
 LIMITE_SAQUES = 3
@@ -21,11 +21,42 @@ while True:
         valor = float(input("Informe o Valor do Depósito: "))
 
         if valor > 0:
-            saldo == valor
-            extrato == f"Depósito: R$ (valor: .2f)\n"
+            saldo +d= valor
+            extrato += f"Depósito: R$ {valor: .2f}\n"
 
-            else:
-                print("Operação falhou! o valor informado é inválido.")
+        else:
+            print("Operação falhou! o valor informado é inválido.")
 
-        elif opcao == "s":
-            valor = float(input("Informe o valor do saque: "))
+    elif opcao == "s":
+        valor = float(input("Informe o valor do saque: "))
+
+        excedeu_saldo = valor > saldo
+        excedeu_limite = valor > limite
+        execedeu_saques = numero_saques >= LIMITE_SAQUES
+
+        if excedeu_saldo:
+            print("Operação falhou! Você não tem saldo suficiente.")
+        elif excedeu_limite:
+            print("Operação falhou! o valor do saque excedeu o limite.")
+        elif execedeu_saques:
+            print("Operação falhou! Número de saques excedido.")
+            
+        elif valor > 0:
+            saldo -= valor
+            extrato += f"saque: R$ {valor: .2f}\n"
+            numero_saques += 1 
+
+        else:
+            print("Operação falhou! O valor informado é inválido.")
+
+    elif opcao == "e":
+            print("\n===============EXTRATO===============")
+            print("Não forma realizadas moviemtações." if not extrato else extrato)
+            print(f"\nSaldo: R$ {saldo: .2f}")
+            print("=======================================")
+
+    elif opcao == "q":
+        break
+
+    else:
+        print("Operacao Inválida, por favor selecione novamente a operação desejada.")            
